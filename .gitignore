@@ -1,0 +1,10 @@
+# IntelliJ
+.idea/
+
+# Compiled output
+out/
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
