@@ -22,14 +22,15 @@ public class ExperimentRunner {
     }
 
     // =========================================================================
-    // Experiment 1: Collision Rate for Separate Chaining only
+    // Experiment 1: Collision Rate Across All Three Techniques
     // =========================================================================
     private static void runExperiment1() {
         System.out.println("-------------------------------------------------------------");
-        System.out.println("Collision Rate vs. Input Size (load ≈ 0.70) - Separate Chaining");
+        System.out.println("Collision Rate vs. Input Size (load ≈ 0.70)");
         System.out.println("-------------------------------------------------------------");
-        System.out.printf("%-10s | %-40s%n", "N (items)", "Separate Chaining");
-        System.out.println("-".repeat(56));
+        System.out.printf("%-10s | %-22s | %-22s | %-22s%n",
+                "N (items)", "Separate Chaining", "Linear Probing", "Double Hashing");
+        System.out.println("-".repeat(82));
 
         ProductGenerator gen = new ProductGenerator(SEED);
 
@@ -38,14 +39,20 @@ public class ExperimentRunner {
             List<Product> products = gen.generate(n);
 
             HashTable<String, Product> sc  = new SeparateChainingHT<>(cap);
+            HashTable<String, Product> lp  = new LinearProbingHT<>(cap);
+            HashTable<String, Product> dh  = new DoubleHashingHT<>(cap);
 
             for (Product p : products) {
                 sc.insert(p.getSku(), p);
+                lp.insert(p.getSku(), p);
+                dh.insert(p.getSku(), p);
             }
 
-            System.out.printf("%-10d | %-40s%n",
+            System.out.printf("%-10d | %-22s | %-22s | %-22s%n",
                     n,
-                    sc.getTotalCollisions() + " collisions (lf=" + String.format("%.2f", sc.loadFactor()) + ")");
+                    sc.getTotalCollisions() + " collisions (lf=" + String.format("%.2f", sc.loadFactor()) + ")",
+                    lp.getTotalCollisions() + " collisions (lf=" + String.format("%.2f", lp.loadFactor()) + ")",
+                    dh.getTotalCollisions() + " collisions (lf=" + String.format("%.2f", dh.loadFactor()) + ")");
         }
         System.out.println();
     }

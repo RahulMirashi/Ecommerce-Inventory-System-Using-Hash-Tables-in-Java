@@ -69,6 +69,8 @@ public class InventoryManager {
 
         // Demonstrate with each strategy
         demo(new SeparateChainingHT<>(101));
+        demo(new LinearProbingHT<>(101));
+        demo(new DoubleHashingHT<>(101));
     }
 
     private static void demo(HashTable<String, Product> ht) {
